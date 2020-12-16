@@ -41,7 +41,17 @@ fn images(file: PathBuf) -> Option<NamedFile> {
 
 fn main() {
     rocket::ignite()
-        .mount("/", routes![images, diagrams::list, diagrams::insert])
+        .mount(
+            "/",
+            routes![
+                images,
+                diagrams::list,
+                diagrams::insert,
+                diagrams::update,
+                diagrams::process_update,
+                diagrams::delete
+            ],
+        )
         .attach(Template::fairing())
         .launch();
 }

@@ -17,5 +17,5 @@ pub struct Diagram {
 pub struct NewDiagram<'a> {
     pub title: &'a str,
     pub photo: String,
-    pub caption: String,
+    pub caption: &'a str,
 }
