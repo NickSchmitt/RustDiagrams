@@ -15,7 +15,7 @@ pub struct Diagram {
 #[derive(Debug, Insertable, AsChangeset)]
 #[table_name = "diagrams"]
 pub struct NewDiagram<'a> {
-    pub name: &'a str,
+    pub title: &'a str,
     pub photo: String,
     pub caption: String,
 }

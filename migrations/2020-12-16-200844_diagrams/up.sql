@@ -4,5 +4,5 @@ CREATE TABLE diagrams (
     title VARCHAR NOT NULL,
     photo TEXT NOT NULL,
     caption TEXT NOT NULL,
-    topic VARCHAR NOT NULL,
+    -- topic VARCHAR NOT NULL,
 )
