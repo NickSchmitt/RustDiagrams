@@ -7,10 +7,12 @@ extern crate diesel;
 extern crate rocket;
 
 extern crate dotenv;
+extern crate rocket_contrib;
 
 use diesel::pg::PgConnection;
 use diesel::Connection;
 use dotenv::dotenv;
+// use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::templates::Template;
 use std::env;
 
@@ -20,6 +22,7 @@ use std::path::{Path, PathBuf};
 
 // diagrams, model and schema modules
 // Todo uncomment when ready
+
 pub mod diagrams;
 pub mod models;
 pub mod schema;
@@ -41,11 +44,13 @@ fn images(file: PathBuf) -> Option<NamedFile> {
 
 fn main() {
     rocket::ignite()
+        // .mount("templates/", StaticFiles::from("static"))
         .mount(
             "/",
             routes![
                 images,
                 diagrams::list,
+                diagrams::new,
                 diagrams::insert,
                 diagrams::update,
                 diagrams::process_update,

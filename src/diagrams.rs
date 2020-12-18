@@ -35,9 +35,9 @@ pub fn list(flash: Option<FlashMessage>) -> Template {
     if let Some(ref msg) = flash {
         context.insert("data", (diagrams, msg.msg()));
     } else {
-        context.insert("data", (diagrams, "Diagrams received"));
+        context.insert("data", (diagrams, "Displaying diagrams"));
     }
-
+    println!("{:?}", &context);
     // render the template with the hash map
     Template::render("list", &context)
 }

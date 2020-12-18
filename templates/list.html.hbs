@@ -1,0 +1,129 @@
+<html>
+
+<head>
+    <title>
+        Diagrams!
+    </title>
+
+    {{!--
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"> --}}
+
+    <base href="/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/sketchy/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="  https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js
+"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js
+"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
+
+
+
+
+    <style>
+        .w-1 {
+            width: 10%;
+        }
+
+        .w-2 {
+            width: 20%;
+        }
+
+        .w-3 {
+            width: 30%;
+        }
+
+        .w-4 {
+            width: 40%;
+        }
+
+        .w-5 {
+            width: 50%;
+        }
+
+        .w-6 {
+            width: 60%;
+        }
+
+        .w-7 {
+            width: 70%;
+        }
+
+        .w-8 {
+            width: 80%;
+        }
+
+        .w-9 {
+            width: 90%;
+        }
+
+        .w-10 {
+            width: 100%;
+        }
+
+        .fade.in {
+            opacity: 1;
+        }
+
+        .row.display-flex {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .row.display-flex>[class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col">
+                <h1 data-augmented-ui="tl-clip both"
+                    class="display-1 d-flex justify-content-between align-items-center">
+                    Diagrams! <a class="btn btn-primary btn-lg float-right" href="/new">Add</a></h1>
+                <hr>
+                <div class="alert alert-info">{{data.1}}</div>
+            </div>
+        </div>
+        <div class="row display-flex col-12">
+
+            {{#each data.0}}
+            <div class="col-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <a style="height:300px;" class="d-flex justify-content-center" href="{{this.photo}}"
+                            data-toggle="lightbox">
+                            <img style="object-fit:cover;" class="d-flex img-fluid img-thumb overflow-auto"
+                                src="{{this.photo}}">
+                        </a>
+                        <h3 class="my-2">
+                            {{this.title}}
+                            <a class="btn btn-sm btn-secondary float-right ml-2" href="/update/{{this.id}}">Edit</a>
+                            <a class="btn btn-sm btn-danger float-right" href="/delete/{{this.id}}">Delete</a>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        {{this.caption}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+    </div>
+    <script>
+        $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+    </script>
+
+
+</body>
+
+</html>
