@@ -22,7 +22,7 @@ use rocket_multipart_form_data::{
 use rocket::request::FlashMessage;
 use rocket::response::{Flash, Redirect};
 
-// get all diagrams
+
 #[get("/")]
 pub fn list(flash: Option<FlashMessage>) -> Template {
     let mut context = HashMap::new();
@@ -31,14 +31,13 @@ pub fn list(flash: Option<FlashMessage>) -> Template {
         .select(diagrams::all_columns)
         .load::<Diagram>(&crate::establish_connection())
         .expect("failed to establish connection");
-    // insert diagram vector into the hash map
+
     if let Some(ref msg) = flash {
         context.insert("data", (diagrams, msg.msg()));
     } else {
         context.insert("data", (diagrams, "Displaying diagrams"));
     }
     println!("{:?}", &context);
-    // render the template with the hash map
     Template::render("list", &context)
 }
 
@@ -67,14 +66,14 @@ pub fn insert(content_type: &ContentType, diagram_data: Data) -> Flash<Redirect>
 
     match multipart_form_data {
         Ok(form) => {
-            // send image to database
+
             let diagram_img = match form.files.get("photo") {
                 Some(img) => {
                     let file_field = &img[0];
                     let _content_type = &file_field.content_type;
                     let _file_name = &file_field.file_name;
                     let _path = &file_field.path;
-                    // todo can I take file_format out?
+
                     let file_format: Vec<&str> = _file_name.as_ref().unwrap().split('.').collect();
 
                     let absolute_path: String = format!("img/{}", _file_name.clone().unwrap());
@@ -85,7 +84,6 @@ pub fn insert(content_type: &ContentType, diagram_data: Data) -> Flash<Redirect>
                 None => None,
             };
 
-            // send rest of the form data to database
             let insert = diesel::insert_into(diagrams::table)
                 .values(NewDiagram {
                     title: match form.texts.get("title") {
@@ -156,7 +154,6 @@ pub fn process_update(content_type: &ContentType, diagram_data: Data) -> Flash<R
                     let _file_name = &file_field.file_name;
                     let _path = &file_field.path;
 
-                    // todo can I take file_format out?
                     let file_format: Vec<&str> = _file_name.as_ref().unwrap().split('.').collect();
 
                     let absolute_path: String = format!("img/{}", _file_name.clone().unwrap());
@@ -167,7 +164,6 @@ pub fn process_update(content_type: &ContentType, diagram_data: Data) -> Flash<R
                 None => None,
             };
 
-            /* Insert our form data inside our database */
             let insert = diesel::update(
                 diagrams::table.filter(
                     diagrams::id.eq(form.texts.get("id").unwrap()[0]
@@ -198,7 +194,6 @@ pub fn process_update(content_type: &ContentType, diagram_data: Data) -> Flash<R
             }
         }
         Err(err_msg) => {
-            /* Falls to this patter if theres some fields that isn't allowed or bolsonaro rules this code */
             Flash::error(
                 Redirect::to("/new"),
                 format!("Database update error: {}", err_msg),
